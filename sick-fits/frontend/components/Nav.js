@@ -1,7 +1,8 @@
 import Link from 'next/link';
+import NavStyles from './styles/NavStyles';
 
 const Nav = () => (
-    <div>
+    <NavStyles>
         <Link href="/index">
             <a>Index</a>
         </Link>
@@ -9,8 +10,8 @@ const Nav = () => (
         <Link href="/sell">
             <a>Sell</a>
         </Link>
-    </div>
+    </NavStyles>
 
-)
+);
 
 export default Nav;
