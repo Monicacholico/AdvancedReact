@@ -2,17 +2,22 @@ const Mutations = {
     async createItem(parent, args, ctx, info){
 
         const item = await ctx.db.mutation.createItem({
-            data:{
-                title: args.title,
-                description: args.description,
-                image: args.image,
-                largeImage: args.largeImage,
-                price: args.price
-            }
-        }, info);
+                data: {
+                    // This is how to create a relationship between the Item and the User
+                    user: {
+                        connect: {
+                            id: ctx.request.userId,
+                        },
+                    },
+                    ...args,
+                },
+            },
+            info
+        );
+
+        console.log(item);
 
         return item;
-        console.log(item);
     }
 
 
