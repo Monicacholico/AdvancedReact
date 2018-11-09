@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Title from './styles/Title';
 import ItemStyles from './styles/ItemStyles';
 import PriceTag from './styles/PriceTag';
+import formatMoney from '../lib/formatMoney';
 
 
 export default class Item extends Component {
@@ -33,7 +34,8 @@ export default class Item extends Component {
                             query: {id: item.id},
                         }}
                     >
-                        <a>Edit</a></Link>
+                        <a>Edit</a>
+                    </Link>
                 </div>
                 </ItemStyles>
                 );
