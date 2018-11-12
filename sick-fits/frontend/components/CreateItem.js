@@ -48,13 +48,15 @@ class CreateItem extends Component {
         return (
             <Mutation mutation={CREATE_ITEM_MUTATION} variables={this.state}>
                 {(createItem, {loading, error}) => (
-                    <Form onSubmit={async e => {
+                    <Form
+                        data-test="form"
+                        onSubmit={async e => {
                         e.preventDefault();
                         const res = await createItem();
                         console.log(res)
                         Router.push({
                             pathname: '/item',
-                            query: {id: res.data.createItem.id}
+                            query: {id: res.data.createItem.id},
                         });
                     }}
                     >
