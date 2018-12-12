@@ -35,6 +35,8 @@ margin: 0 auto;
 
 class Items extends Component {
     render(){
+
+        console.log(this.props)
         return (
             <Center>
                 <Query query={ALL_ITEMS_QUERY}>

@@ -1,7 +1,7 @@
 type User {
-  id: ID! @unique
-  name: String!
-  email: String!
+    id: ID! @unique
+    name: String!
+    email: String!
 }
 
 type Item {
@@ -11,5 +11,6 @@ type Item {
     image: String
     largeImage: String
     price: Int!
-    user: User!
+    createdAt: DateTime!
+    updatedAt: DateTime!
 }
