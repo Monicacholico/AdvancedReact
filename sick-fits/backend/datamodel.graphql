@@ -13,7 +13,7 @@ type User {
     email: String!
     password: String!
     resetToken: String
-    resetTokenExpiry: String
+    resetTokenExpiry: Float
     permissions: [Permission]
 }
 
