@@ -82,7 +82,7 @@ const Mutations = {
             throw new Error('Invalid Password!');
         }
         //.3 generate the JWT Token
-        const token = jwt.sign({userId: user.id}, process.env.APP_SECRET);
+        const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
         //4.Set the cookie with the token
         ctx.response.cookie('token', token, {
             httpOnly: true,
@@ -90,7 +90,11 @@ const Mutations = {
         });
         //5. Return the User
         return user;
-    }
+    },
+    signout(parent, args, ctx, info) {
+        ctx.response.clearCookie('token');
+        return {message: "Goodbye"};
+        },
 };
 
 module.exports = Mutations;

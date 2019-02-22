@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Mutation} from 'react-apollo';
+import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import Form from './styles/Form';
 import Error from './ErrorMessage';
@@ -10,7 +10,8 @@ const SIGNIN_MUTATION = gql`
         signin(email: $email, password: $password){
             id
             email
-            name}
+            name
+        }
     }
 `;
 
@@ -21,20 +22,24 @@ class Signin extends Component {
         password: '',
         email: '',
     };
-    saveToState = (e) => {
+    saveToState = e => {
         this.setState({[e.target.name]: e.target.value});
     };
 
     render() {
         return (
-            <Mutation mutation={SIGNIN_MUTATION} variables={this.state}
+            <Mutation
+                mutation={SIGNIN_MUTATION}
+                variables={this.state}
             refetchQueries={[{query: CURRENT_USER_QUERY}]}>
-                {(signup, {error, loading}) => (
-                    <Form method="post" onSubmit={async(e) =>{
-                        e.preventDefault();
-                        await signup();
-                        this.setState({name: '', email: '', password: ''});
-                    }}
+                {(signup, { error, loading }) => (
+                    <Form
+                        method="post"
+                        onSubmit={async e => {
+                            e.preventDefault();
+                            await signup();
+                            this.setState({ name: '', email: '', password: '' });
+                        }}
                     >
                         <fieldset disabled={loading} aria-busy={loading}>
                             <h2>Sign into your Account</h2>
@@ -59,10 +64,9 @@ class Signin extends Component {
                             </label>
                             <button type="submit">Sign Up!</button>
                         </fieldset>
-                    </Form>)
-                }
+                    </Form>
+                )}
             </Mutation>
-
         );
     }
 }
