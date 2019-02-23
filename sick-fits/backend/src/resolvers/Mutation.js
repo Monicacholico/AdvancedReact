@@ -98,24 +98,23 @@ const Mutations = {
         return {message: "Goodbye"};
         },
     async requestReset(parent, args, ctx, info) {
-      //1. Check if this is a real user
-        const user = await ctx.db.query.user({where: {email: args.email}});
+        //1. Check if this is a real user
+        const user = await ctx.db.query.user({ where: {email: args.email}});
         if(!user){
-            throw new Error(`No such user found for email ${args.email}`);
+            throw new Error(`No such user found for email${args.email}`)
         }
-      //2. Set a reset token and expiry on that user
-        const randombytesPromiseified = promisify(randomBytes);
-        const resetToken = (await randombytesPromiseified).toString('hex');
+        //2. Set a reset token and expiry on that user
+        const randomBytesPromisified = promisify(randomBytes);
+        const resetToken = (await randomBytesPromisified(20)).toString('hex');
         const resetTokenExpiry = Date.now() + 3600000;
         const res = await ctx.db.mutation.updateUser({
             where: {email: args.email},
-            data: {resetToken: resetToken, resetTokenExpiry: resetTokenExpiry},
+            data: {resetToken, resetTokenExpiry},
         });
-        console.log(res)
-        //3. Email then that reset token
+        console.log(res);
+        return {message: 'Thanks'};
+    },
 
-
-    }
 };
 
 module.exports = Mutations;
