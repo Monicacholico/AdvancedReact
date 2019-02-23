@@ -1,6 +1,8 @@
 
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const {randomBytes} = require('crypto');
+const {promisify} = require('util');
 
 const Mutations = {
     async createItem(parent, args, ctx, info){
@@ -95,6 +97,25 @@ const Mutations = {
         ctx.response.clearCookie('token');
         return {message: "Goodbye"};
         },
+    async requestReset(parent, args, ctx, info) {
+      //1. Check if this is a real user
+        const user = await ctx.db.query.user({where: {email: args.email}});
+        if(!user){
+            throw new Error(`No such user found for email ${args.email}`);
+        }
+      //2. Set a reset token and expiry on that user
+        const randombytesPromiseified = promisify(randomBytes);
+        const resetToken = (await randombytesPromiseified).toString('hex');
+        const resetTokenExpiry = Date.now() + 3600000;
+        const res = await ctx.db.mutation.updateUser({
+            where: {email: args.email},
+            data: {resetToken: resetToken, resetTokenExpiry: resetTokenExpiry},
+        });
+        console.log(res)
+        //3. Email then that reset token
+
+
+    }
 };
 
 module.exports = Mutations;

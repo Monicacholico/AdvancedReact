@@ -1585,12 +1585,12 @@ type User implements Node {
   email: String!
   password: String!
   name: String!
-  orders(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Order!]
+#  orders(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Order!]
   resetToken: String
   resetTokenExpiry: String
-  cart(where: CartItemWhereInput, orderBy: CartItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CartItem!]
-  createdAt: DateTime!
-  updatedAt: DateTime!
+#  cart(where: CartItemWhereInput, orderBy: CartItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CartItem!]
+#  createdAt: DateTime!
+#  updatedAt: DateTime!
   permissions: [Permission!]
 }
 
