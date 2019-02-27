@@ -4,13 +4,13 @@ import gql from 'graphql-tag';
 import Form from './styles/Form';
 import Error from './ErrorMessage';
 
-// const REQUEST_RESET_MUTATION = gql`
-//   mutation REQUEST_RESET_MUTATION($email: String!) {
-//     requestReset(email: $email) {
-//       message
-//     }
-//   }
-// `;
+const REQUEST_RESET_MUTATION = gql`
+  mutation REQUEST_RESET_MUTATION($email: String!) {
+    requestReset(email: $email) {
+      message
+    }
+  }
+`;
 
 class RequestReset extends Component {
   state = {
