@@ -5,7 +5,9 @@ const {promisify} = require('util');
 
 const Mutations = {
     async createItem(parent, args, ctx, info) {
-
+        if(!ctx.request.userId){
+            throw new Error("You must be logged in to do that!")
+        }
         const item = await ctx.db.mutation.createItem(
             {
                 data: {
