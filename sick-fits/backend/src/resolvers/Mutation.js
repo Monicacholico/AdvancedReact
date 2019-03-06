@@ -2,12 +2,15 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const {randomBytes} = require('crypto');
 const {promisify} = require('util');
+const {transport, makeANiceEmail} = require('../mail');
 
 const Mutations = {
     async createItem(parent, args, ctx, info) {
         if(!ctx.request.userId){
             throw new Error("You must be logged in to do that!")
         }
+
+
         const item = await ctx.db.mutation.createItem(
             {
                 data: {
@@ -46,7 +49,7 @@ const Mutations = {
     async deleteItem(parent, args, ctx, info) {
         const where = {id: args.id};
         //1.find the item
-        const item = await ctx.db.query.item({where}, `{id title}`);
+        const item = await ctx.db.query.item({where}, `{id title user {id}}`);
         //2. Check if they own thata item, or have the permissions
 
         //3. Delete it!
