@@ -5,8 +5,8 @@ import Form from './styles/Form';
 import Error from './ErrorMessage';
 
 const REQUEST_RESET_MUTATION = gql`
-    mutation REQUEST_RESET_MUTATION($email: String!, $password: String!) {
-        requestReset(email: $email, password: @password) {
+    mutation REQUEST_RESET_MUTATION($email: String!) {
+        requestReset(email: $email) {
             message
         }
     }
