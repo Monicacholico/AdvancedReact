@@ -180,7 +180,6 @@ const Mutations = {
         // 8. return the new user
         return updatedUser;
     },
-    }
 };
 
 module.exports = Mutations;
