@@ -1,5 +1,5 @@
 const {forwardTo} = require('prisma-binding');
-const {hasPermissions} = require('../utils');
+const {hasPermission} = require('../utils');
 
 const Query = {
     items: forwardTo('db'),
@@ -27,10 +27,6 @@ const Query = {
         // 2. if they do, query all the users!
         return ctx.db.query.users({}, info);
     },
-   // async items(parent, args, ctx, info){
-   //      const items= await ctx.db.query.items();
-   //      return items;
-   //  }
 
 
 };
