@@ -48,7 +48,7 @@ const Permissions = props => (
     </Query>
 );
 
-class UserPermissions extends React.Component {
+class User extends React.Component {
     render() {
         const user = this.props.user;
         return (
