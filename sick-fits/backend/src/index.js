@@ -22,7 +22,7 @@ server.express.use((req, res, next) => {
    }
     next();
 });
-//2. Create a middleware that populates teh suer on each request
+//2. Create a middleware that populates teh user on each request
 
 server.express.use(async (req, res, next) => {
     // if they aren't logged in, skip this
@@ -34,6 +34,7 @@ server.express.use(async (req, res, next) => {
     req.user = user;
     next();
 });
+
 
 server.start(
     {

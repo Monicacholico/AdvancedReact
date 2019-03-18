@@ -2,7 +2,7 @@ import {Query} from 'react-apollo';
 import Error from './ErrorMessage';
 import gql from 'graphql-tag';
 import Table from './styles/Table';
-import Suckb from './styles/Suckb';
+import SickButton from './styles/SickButton';
 
 
 const possiblePermissions = [
@@ -15,8 +15,8 @@ const possiblePermissions = [
 ];
 
 const ALL_USERS_QUERY = gql`
-    query{
-        users{
+    query {
+        users {
             id
             name
             email
@@ -24,7 +24,6 @@ const ALL_USERS_QUERY = gql`
         }
     }
 `;
-
 const Permissions = props => (
     <Query query={ALL_USERS_QUERY}>
         {({data, loading, error}) => (
@@ -35,31 +34,21 @@ const Permissions = props => (
                     <Table>
                         <thead>
                         <tr>
-                            <th>
-                                Name
-                            </th>
-                            <th>
-                                Email
-                            </th>
-                            {possiblePermissions.map(permission =>
-                                <th>{permission}</th>)}
-                            <th>
-
-                            </th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            {possiblePermissions.map(permission => <th key={permission}>{permission}</th>)}
+                            <th></th>
                         </tr>
                         </thead>
-                        <tbody>
-                        {data.users.map(user => user.name)}
-                        </tbody>
+                        <tbody>{data.users.map(user => <UserPermissions user ={user} key={user.id}/>)}</tbody>
                     </Table>
                 </div>
-                <p>hey</p>
             </div>
         )}
     </Query>
 );
 
-class User extends React.Component {
+class UserPermissions extends React.Component {
     render() {
         const user = this.props.user;
         return (
