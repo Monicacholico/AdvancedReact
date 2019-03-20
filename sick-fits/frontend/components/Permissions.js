@@ -15,6 +15,15 @@ const possiblePermissions = [
     'PERMISSIONUPDATE'
 ];
 
+const UPDATE_PERMISSIONS_MUTATION = gql`
+    mutation UpdatedPermissions($permissions: [Permission],
+    $userId: ID!) {
+        id
+        permissions
+    }
+`
+
+
 const ALL_USERS_QUERY = gql`
     query {
         users {
@@ -43,7 +52,7 @@ const Permissions = props => (
                             <th></th>
                         </tr>
                         </thead>
-                        <tbody>{data.users.map(user => <UserPermissions user ={user} key={user.id}/>)}</tbody>
+                        <tbody>{data.users.map(user => <UserPermissions user={user} key={user.id}/>)}</tbody>
                     </Table>
                 </div>
             </div>
@@ -55,7 +64,7 @@ class UserPermissions extends React.Component {
     static propTypes = {
         user: PropTypes.shape({
             name: PropTypes.string,
-            email:PropTypes.string,
+            email: PropTypes.string,
             id: PropTypes.string,
             persmissions: PropTypes.array,
         }).isRequired,
@@ -64,11 +73,11 @@ class UserPermissions extends React.Component {
         permissions: this.props.user.permissions,
     };
     handlePermissionChange = e => {
-      const checkbox = e.target;
-      //take  a copy of the current permissions
+        const checkbox = e.target;
+        //take  a copy of the current permissions
         let updatedPermissions = [...this.state.permissions];
         //figure out if we need to remove or add this permission
-        if(checkbox.checked) {
+        if (checkbox.checked) {
             //add it in!
             updatedPermissions.push(checkbox.value);
         } else {
@@ -77,6 +86,7 @@ class UserPermissions extends React.Component {
         }
         this.setState({permissions: updatedPermissions})
     };
+
     render() {
         const user = this.props.user;
         return (
@@ -87,10 +97,12 @@ class UserPermissions extends React.Component {
                     <td key={permission}>
                         <label htmlFor={`${user.id}-permission-$
                        {permission}`}>
-                            <input type="checkbox" checked =
-                                {this.state.permissions.includes(permission)}
-                                   value={permission}
-                                   onChange={this.handlePermissionChange}
+                            <input
+                                id={`${user.id}-permission-${permission}`}
+                                type="checkbox"
+                                checked={this.state.permissions.includes(permission)}
+                                value={permission}
+                                onChange={this.handlePermissionChange}
                             />
                         </label>
                     </td>
