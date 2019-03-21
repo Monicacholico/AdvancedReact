@@ -1,4 +1,4 @@
-import {Query} from 'react-apollo';
+import {Query, Mutation} from 'react-apollo';
 import Error from './ErrorMessage';
 import gql from 'graphql-tag';
 import Table from './styles/Table';
@@ -16,13 +16,18 @@ const possiblePermissions = [
 ];
 
 const UPDATE_PERMISSIONS_MUTATION = gql`
-    mutation UpdatedPermissions($permissions: [Permission],
+    mutation UpdatePermissions($permissions: [Permission],
     $userId: ID!) {
-        id
-        permissions
+        updatePermissions(permissions: $permissions, userId:
+            $userId){
+            id
+            permissions
+            name
+            email
+        }
     }
 `
-
+;
 
 const ALL_USERS_QUERY = gql`
     query {
@@ -90,6 +95,15 @@ class UserPermissions extends React.Component {
     render() {
         const user = this.props.user;
         return (
+            <Mutation mutation={UPDATE_PERMISSIONS_MUTATION}
+            variables={{
+                permissions: this.state.permissions,
+                userId: this.props.user.id
+            }}>
+
+                {(updatePermissions, {loading, error}) => (
+                    <>
+                    {error &&<tr><td colSpan="8"> <Error error={error}/></td></tr>}
             <tr>
                 <td>{user.name}</td>
                 <td>{user.email}</td>
@@ -108,9 +122,15 @@ class UserPermissions extends React.Component {
                     </td>
                 ))}
                 <td>
-                    <SickButton>Update</SickButton>
+                    <SickButton type="button" disabled={loading}
+                                onClick={updatePermissions}
+                    >Updat{loading ? 'ing' : 'e'}
+                    </SickButton>
                 </td>
             </tr>
+                    </>
+                )}
+            </Mutation>
         );
     }
 }
