@@ -49,6 +49,7 @@ const Mutations = {
         );
     },
     async deleteItem(parent, args, ctx, info) {
+        // throw new Error("You aren't allowed !!!!!");
         const where = { id: args.id };
         // 1. find the item
         const item = await ctx.db.query.item({ where }, `{ id title user { id }}`);
