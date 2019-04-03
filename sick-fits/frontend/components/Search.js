@@ -39,15 +39,27 @@ class AutoComplete extends React.Component {
     render(){
         return(
         <SearchStyles>
+            <Downshift>
+                {({getInputProps, getItemProps, isOpen,
+                  inputValue, highlightedIndex}) => (
+
+
             <div>
                 <ApolloConsumer>
                     {client => (
                         <input
-                            type="search"
-                            onChange ={e =>{
-                        e.persist();
-                        this.onChange(e, client);
-                        }}
+
+                            {...getInputProps({
+                                type: "search",
+                                placeholder: 'Search For An Item',
+                                id: 'search',
+                                className: this.state.loading ?
+                                    'loading' : '',
+                                onChange: e =>{
+                                e.persist();
+                                this.onChange(e, client);
+                            },
+                            })}
                         />
                         )}
                 </ApolloConsumer>
@@ -60,6 +72,8 @@ class AutoComplete extends React.Component {
                     </DropDownItem>)}
                 </DropDown>
             </div>
+                )}
+            </Downshift>
         </SearchStyles>
         );
     }
