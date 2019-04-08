@@ -286,6 +286,7 @@ const Mutations = {
             (tall, cartItem) => tally + cartItem.item.price * cartItem.quantity,
             0
         );
+        console.log(`Going to charge for a total of ${amount}`);
 
         //3. Create the strip charge
         //4. Convert the CartItems to OrderItems
