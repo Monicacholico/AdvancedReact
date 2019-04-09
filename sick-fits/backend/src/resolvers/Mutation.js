@@ -7,6 +7,7 @@ const {hasPermission} = require('../utils');
 const stripe = require('../stripe');
 
 
+
 const Mutations = {
     async createItem(parent, args, ctx, info) {
         if (!ctx.request.userId) {
@@ -268,7 +269,7 @@ const Mutations = {
     async createOrder(parent,args,ctx, info){
         //1. Query the curren user and make sure they are signed in
         const {userId} = ctx.request;
-        if(!userId) throw new Error('You must be signed in to complet this order');
+        if(!userId) throw new Error('You must be signed in to complete this order');
         const user = await ctx.db.query.user(
             {where: {id: userId} },
             `{
@@ -283,12 +284,17 @@ const Mutations = {
         );
         //2. Recalculate the total for the price
         const amount = user.cart.reduce(
-            (tall, cartItem) => tally + cartItem.item.price * cartItem.quantity,
+            (tally, cartItem) => tally + cartItem.item.price * cartItem.quantity,
             0
         );
         console.log(`Going to charge for a total of ${amount}`);
 
         //3. Create the strip charge
+        const charge = await stripe.charges.create({
+            amount,
+            currency: "USD",
+            source: args.token,
+        });
         //4. Convert the CartItems to OrderItems
         //t. Create the order
         //6. Clean up clear the users cart, delete cartItems
