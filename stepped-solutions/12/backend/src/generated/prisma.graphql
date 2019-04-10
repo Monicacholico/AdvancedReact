@@ -943,7 +943,7 @@ input OrderItemUpdateInput {
 }
 
 input OrderItemUpdateManyInput {
-  create: [OrderItemCreateInput!]
+#  create: [OrderItemCreateInput!]
   connect: [OrderItemWhereUniqueInput!]
   disconnect: [OrderItemWhereUniqueInput!]
   delete: [OrderItemWhereUniqueInput!]
