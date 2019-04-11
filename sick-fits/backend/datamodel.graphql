@@ -42,7 +42,7 @@ type OrderItem {
     largeItem: String!
     price: Int!
     quantity: Int! @default(value: 1)
-    user: User
+#    user: User
 
 }
 
